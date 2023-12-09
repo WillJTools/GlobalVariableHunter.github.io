@@ -7,8 +7,8 @@ function searchGlobals() {
 
     reader.onload = function(e) {
       const content = e.target.result;
-      const globalVars = findGlobalVariables(content);
-      displayResults(globalVars);
+      const wordsWithA = findWordsWithA(content);
+      displayResults(wordsWithA);
     };
 
     reader.readAsText(file);
@@ -17,31 +17,33 @@ function searchGlobals() {
   }
 }
 
-function findGlobalVariables(code) {
-  const globalVarRegex = /\b(?:var|let|const)\s+(\w+)/g;
-  const matches = code.match(globalVarRegex);
-  return matches ? matches.map(match => match.split(/\s+/)[1]) : [];
+function findWordsWithA(code) {
+  // Splitting code content into words
+  const words = code.split(/\b\W+\b/);
+  // Filtering words that contain 'a' or 'A'
+  const wordsWithA = words.filter(word => /a/i.test(word));
+  return wordsWithA;
 }
 
-function displayResults(variables) {
+function displayResults(words) {
   const resultContainer = document.getElementById('result');
   resultContainer.innerHTML = '';
 
-  if (variables.length > 0) {
+  if (words.length > 0) {
     const heading = document.createElement('h2');
-    heading.textContent = 'Global Variables found:';
+    heading.textContent = 'Words with the letter "A":';
     resultContainer.appendChild(heading);
 
     const list = document.createElement('ul');
-    variables.forEach(variable => {
+    words.forEach(word => {
       const listItem = document.createElement('li');
-      listItem.textContent = variable;
+      listItem.textContent = word;
       list.appendChild(listItem);
     });
     resultContainer.appendChild(list);
   } else {
-    const noVarsMessage = document.createElement('p');
-    noVarsMessage.textContent = 'No global variables found in this code.';
-    resultContainer.appendChild(noVarsMessage);
+    const noWordsMessage = document.createElement('p');
+    noWordsMessage.textContent = 'No words found containing the letter "A".';
+    resultContainer.appendChild(noWordsMessage);
   }
 }
