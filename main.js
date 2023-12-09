@@ -18,29 +18,15 @@ function searchGlobals() {
 }
 
 function findGlobalVariables(code) {
-  const globalVarRegex = /\b(var|let|const)\s+(\w+)\b/g;
+  const globalVarRegex = /\b(?:var|let|const)\s+(\w+)/g;
   const matches = code.match(globalVarRegex);
-  const variables = [];
-
-  if (matches) {
-    matches.forEach(match => {
-      const varName = match.split(/\s+/)[1];
-      if (!variables.includes(varName)) {
-        variables.push(varName);
-      }
-    });
-  }
-
-  return variables;
+  return matches ? matches.map(match => match.split(/\s+/)[1]) : [];
 }
 
 function displayResults(variables) {
   const resultContainer = document.getElementById('result');
   resultContainer.innerHTML = '';
 
-  const noVarsMessage = document.createElement('p');
-  noVarsMessage.textContent = 'No global variables found in this code.';
-  
   if (variables.length > 0) {
     const heading = document.createElement('h2');
     heading.textContent = 'Global Variables found:';
@@ -54,6 +40,8 @@ function displayResults(variables) {
     });
     resultContainer.appendChild(list);
   } else {
+    const noVarsMessage = document.createElement('p');
+    noVarsMessage.textContent = 'No global variables found in this code.';
     resultContainer.appendChild(noVarsMessage);
   }
 }
