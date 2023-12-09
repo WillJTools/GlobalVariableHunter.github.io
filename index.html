@@ -1,76 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Global Variable Finder</title>
+  <title>Words Containing Letter 'A' Finder</title>
 </head>
 <body>
-  <h1>Global Variable Finder</h1>
+  <h1>Words Containing Letter 'A' Finder</h1>
   
-  <p>
-    This tool helps identify global variables in JavaScript files. Global variables, while convenient, can pose security risks. They are accessible from any part of the codebase and can lead to unintended consequences, such as:
-  </p>
-  
-  <ul>
-    <li><strong>Data Overwriting:</strong> Global variables might unintentionally overwrite or modify data, causing unexpected behavior.</li>
-    <li><strong>Security Vulnerabilities:</strong> They can be exploited by malicious code to access sensitive information or manipulate the application's behavior.</li>
-    <li><strong>Maintenance Challenges:</strong> Code with numerous global variables can become difficult to maintain and debug.</li>
-  </ul>
-
-  <p>
-    For example, consider the following JavaScript code snippet:
-  </p>
-
-  <pre>
-    <code>
-      // This is a global variable
-      var currentUser = 'Guest';
-
-      function login(user) {
-        // Assume this function sets the currentUser upon successful login
-        currentUser = user;
-      }
-
-      function displaySensitiveData() {
-        // Check if the current user is privileged
-        if (currentUser === 'Admin') {
-          // Display sensitive information only for admin
-          console.log('Sensitive information here...');
-        } else {
-          console.log('Access denied!');
-        }
-      }
-
-      // Simulating a login
-      login('Admin');
-      displaySensitiveData();
-    </code>
-  </pre>
-
-  <p>
-    In this code, the <code>currentUser</code> variable is global and stores the currently logged-in user. This variable is accessed and modified by various functions. However, its global nature allows any part of the code to change its value, potentially leading to security vulnerabilities or unintended data access.
-  </p>
-
-  <p>
-    <strong>Exploitation:</strong> An attacker could use the browser's developer tools console to exploit this vulnerability. For instance, by executing the following code:
-  </p>
-
-  <pre>
-    <code>
-      currentUser = 'MaliciousUser';
-      displaySensitiveData();
-    </code>
-  </pre>
-
-  <p>
-    This would alter the <code>currentUser</code> variable to 'MaliciousUser' and potentially grant unauthorized access to sensitive information, bypassing intended authentication mechanisms.
-  </p>
-
   <input type="file" id="fileInput">
-  <button onclick="searchGlobals()">Search Global Variables</button>
-  <pre id="result"></pre>
+  <button onclick="searchGlobals()">Search for Words with 'A'</button>
+  <div id="result"></div>
   
-  <p>2023 WillJTools All rights reserved.</p>
-
   <script src="script.js"></script>
 </body>
 </html>
