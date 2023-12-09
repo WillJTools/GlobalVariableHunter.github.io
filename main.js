@@ -20,20 +20,39 @@ function searchGlobals() {
 function findGlobalVariables(code) {
   const globalVarRegex = /\b(var|let|const)\s+(\w+)\b/g;
   const matches = code.match(globalVarRegex);
-  
+  const variables = [];
+
   if (matches) {
-    const uniqueVars = [...new Set(matches.map(match => match.split(/\s+/)[1]))];
-    return uniqueVars;
-  } else {
-    return [];
+    matches.forEach(match => {
+      const varName = match.split(/\s+/)[1];
+      if (!variables.includes(varName)) {
+        variables.push(varName);
+      }
+    });
   }
+
+  return variables;
 }
 
 function displayResults(variables) {
   const resultContainer = document.getElementById('result');
+  resultContainer.innerHTML = '';
+
   if (variables.length > 0) {
-    resultContainer.textContent = 'Global Variables found:\n' + variables.join('\n');
+    const heading = document.createElement('h2');
+    heading.textContent = 'Global Variables found:';
+    resultContainer.appendChild(heading);
+
+    const list = document.createElement('ul');
+    variables.forEach(variable => {
+      const listItem = document.createElement('li');
+      listItem.textContent = variable;
+      list.appendChild(listItem);
+    });
+    resultContainer.appendChild(list);
   } else {
-    resultContainer.textContent = 'No global variables found.';
+    const noVarsMessage = document.createElement('p');
+    noVarsMessage.textContent = 'No global variables found.';
+    resultContainer.appendChild(noVarsMessage);
   }
 }
