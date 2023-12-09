@@ -38,6 +38,9 @@ function displayResults(variables) {
   const resultContainer = document.getElementById('result');
   resultContainer.innerHTML = '';
 
+  const noVarsMessage = document.createElement('p');
+  noVarsMessage.textContent = 'No global variables found in this code.';
+  
   if (variables.length > 0) {
     const heading = document.createElement('h2');
     heading.textContent = 'Global Variables found:';
@@ -51,8 +54,6 @@ function displayResults(variables) {
     });
     resultContainer.appendChild(list);
   } else {
-    const noVarsMessage = document.createElement('p');
-    noVarsMessage.textContent = 'No global variables found.';
     resultContainer.appendChild(noVarsMessage);
   }
 }
